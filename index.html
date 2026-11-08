@@ -543,12 +543,12 @@ function nbadge(k){return todayCount(k)?'<span class="nb tnb" aria-label="새 �
 function loginHtml(){
   return '<div class="gate"><form class="lwin" data-form="login" autocomplete="off"><div class="logo" aria-hidden="true"><span class="l1">mini</span><span class="l2">home</span></div>'+
   '<div class="lpic"><svg viewBox="0 0 50 36" aria-hidden="true"><use href="#ma" width="24" height="36"></use><use href="#mb" x="26" width="24" height="36"></use></svg></div>'+
-  '<label class="lf"><span>아이디</span><input name="id" value="parksungho" maxlength="20" autocapitalize="off"></label>'+
-  '<label class="lf"><span>비밀번호</span><input name="pw" type="password" maxlength="20" placeholder="아무거나 입력"></label>'+
+  '<label class="lf"><span>아이디</span><input name="id" value="sungho" maxlength="20" autocapitalize="off"></label>'+
+  '<label class="lf"><span>비밀번호</span><input name="pw" type="password" maxlength="20" placeholder="비밀번호" inputmode="numeric"></label>'+
   '<p class="lerr" id="lerr" role="alert"></p>'+
   '<button type="submit" class="btn on lbtn">로그인</button>'+
   '<label class="lchk"><input type="checkbox" checked> 아이디 저장</label>'+
-  '<p class="lnote">박성호의 계정으로 로그인해 보세요. 비밀번호는 아무거나 괜찮아요.</p></form></div>';
+  '<p class="lnote">박성호의 계정으로 로그인해 보세요.</p></form></div>';
 }
 
 function sidebar(){
@@ -797,7 +797,7 @@ app.addEventListener('submit',function(e){
   e.preventDefault();var f=e.target,k=f.dataset.form,d=new FormData(f);
   function v(n){return String(d.get(n)||'').trim()}
   if(k==='guest'||k==='ilchon'){f.reset();if(f.elements['name'])f.elements['name'].value=v('name')}
-  if(k==='login'){if(!v('id')||!v('pw')){var le=document.getElementById('lerr');if(le)le.textContent=!v('id')?'아이디를 입력해 주세요':'비밀번호를 입력해 주세요';return}
+  if(k==='login'){var le=document.getElementById('lerr'),lm=!v('id')?'아이디를 입력해 주세요':!v('pw')?'비밀번호를 입력해 주세요':v('id')!=='sungho'?'아이디를 다시 확인해 주세요':v('pw')!=='0603'?'비밀번호가 틀렸어요':'';if(lm){if(le)le.textContent=lm;var pwi=f.elements['pw'];if(pwi&&v('id')==='sungho'){pwi.value='';pwi.focus()}return}
     me.dotori+=10;ui.gate='req';render();toast('🌰 출석 도토리 10개를 받았어요');return}
   if(k==='photo'){if(!ui.pimg){setStatus('사진을 골라 주세요');toast('사진을 먼저 골라 주세요');return}var pd=(authorOn()&&dotDate(v('date')))||today();state.photo.unshift({title:v('title')||'제목 없음',body:v('body'),src:ui.pimg,date:pd,at:pd===today()?Date.now():dayMs(pd)});sortPhotos();ui.pwriting=false;ui.pimg='';delete ui.keep.photo;render();return}
   if(k==='ilchon'){if(!v('text'))return;var nk=v('nick'),nm=v('name'),ie={text:v('text'),nick:nk&&nm?nk+' - '+nm:(nk||nm||'일촌'),date:today(),at:Date.now()};if(authorOn())state.ilchon.unshift(ie);else{var ic=cname('ilchon');if(!Array.isArray(mine[ic]))mine[ic]=[];mine[ic].push(ie);saveMine()}}
