@@ -535,7 +535,7 @@ function photoMain(){
   if(ui.pwriting&&canWrite())return '<section class="diary"><form class="wr" data-form="photo" data-keep="1"><div class="wr-head"><h2 class="lbl pk">PHOTO UPLOAD</h2>'+(authorOn()?'<label class="mlab">날짜 <input type="date" class="pdate" name="date" value="'+isoDate(today())+'"></label>':'<span class="wr-date">'+today()+'</span>')+'</div><div class="wr-body">'+
     '<label for="pTitle" class="sr">제목</label><input id="pTitle" class="wr-title" name="title" placeholder="사진 제목" maxlength="60">'+
     '<div class="pdrop" id="pprev">'+(ui.pimg?'<img src="'+esc(ui.pimg)+'" alt="올릴 사진">':'<span>아직 고른 사진이 없어요</span>')+'</div>'+
-    '<div class="wr-tool"><label class="bgm-file" for="pFile">사진 고르기</label><input id="pFile" class="sr" type="file" accept="image/*" data-pfile="1"><span class="mhint">사진은 자동으로 줄여서 넣어요</span></div>'+
+    '<div class="wr-tool"><label class="bgm-file" for="pFile">사진 고르기</label><input id="pFile" class="sr" type="file" accept="image/*" data-pfile="1">'+(authorOn()?'<span class="mhint">사진은 자동으로 줄여서 넣어요</span>':'')+'</div>'+
     '<label for="pBody" class="sr">설명</label><textarea id="pBody" class="wr-text" name="body" maxlength="500" placeholder="사진에 대한 이야기" style="min-height:96px"></textarea>'+
     '</div><div class="wr-foot"><button type="button" class="btn ghost" data-pcancel="1">취소</button><button type="submit" class="btn on">올리기</button></div></form></section>';
   return '<section class="diary"><div class="rowhead"><h2 class="lbl">PHOTO</h2>'+(canWrite()?'<button type="button" class="btn on" data-pwrite="1">📷 사진 올리기</button>':'')+'</div>'+(L||'<p class="empty-note dempty">아직 올린 사진이 없어요.</p>')+'</section>';
