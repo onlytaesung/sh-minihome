@@ -721,7 +721,7 @@ function gateHtml(){
   '<p><b>'+esc(REQ.to)+'</b>님은 <b>'+esc(REQ.from)+'</b>님을 <span class="gnk">'+esc(REQ.fromNick)+'</span>(으)로</p></div>'+
   '<div class="gmsg"><h2 class="lbl pk">MESSAGE</h2><p>'+esc(REQ.msgs[Math.min(r,REQ.msgs.length-1)])+'</p></div>'+
   (r?'<p class="gagain" role="status">'+esc(AGAIN)+'</p>':'')+
-  '<div class="gbtn"><button type="button" class="btn on" data-accept="1">수락</button>'+(r<2?'<button type="button" class="btn ghost" data-refuse="1">거절</button>':'<span class="gnob">거절 버튼이 사라졌어요</span>')+'</div>'+
+  '<div class="gbtn"><button type="button" class="btn on" data-accept="1">수락</button>'+(r<2?'<button type="button" class="btn ghost" data-refuse="1">거절</button>':'')+'</div>'+
   '</div></div></div>';
 }
 function keepForms(){app.querySelectorAll('form[data-keep]').forEach(function(f){var o={};Array.prototype.forEach.call(f.elements,function(el){if(!el.name)return;o[el.name]=el.type==='checkbox'?el.checked:el.value});ui.keep[f.dataset.form]=o})}
