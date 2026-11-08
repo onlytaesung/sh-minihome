@@ -28,6 +28,7 @@ a{color:var(--blue)}
 .titlebar{grid-column:3;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;min-width:0}
 .titlebar h1{margin:0;font-size:17px;font-weight:800;color:var(--blue);letter-spacing:-.3px;text-wrap:balance}
 .titlebar h1 .hrt{color:var(--pink-s)}
+.tt{display:flex;flex-direction:column;gap:2px;min-width:0}
 .url{font-size:11px;color:var(--muted);word-break:break-all}
 .tools{margin-left:auto;display:flex;align-items:center;gap:8px}
 .status{font-size:11px;color:var(--muted)}
@@ -741,7 +742,7 @@ function render(){
   var editBtn=!ui.visit&&!authorOn()?'<button type="button" class="btn ghost" id="resetBtn">처음으로</button>'+(ui.tab==='home'?'<button type="button" class="btn'+(ui.edit?' on':'')+'" id="editBtn" aria-pressed="'+ui.edit+'">'+(ui.edit?'편집 끝내기':'꾸미기')+'</button>':''):'';
   app.innerHTML=SPRITES+'<div class="wrap on-'+ui.tab+(ui.edit||authorOn()?' editing':'')+'"><div class="shell"><div class="book">'+
   '<div class="top"><div class="count"><span class="t">TODAY</span> '+(ui.visit?esc(state.today):ed('today',{label:'TODAY 숫자'}))+' <span class="bar">|</span> <span class="o">TOTAL</span> '+(ui.visit?esc(state.total):ed('total',{label:'TOTAL 숫자'}))+'</div>'+
-  '<div class="titlebar"><h1>'+ed('owner',{label:'이름'})+'님의 미니홈피 <span class="hrt">♥</span></h1><span class="url">'+ed('url',{label:'주소'})+'</span><span class="tools"><span class="status" id="status" role="status">'+esc(statusText)+'</span>'+editBtn+'</span></div></div>'+mbar()+
+  '<div class="titlebar"><div class="tt"><h1>'+ed('owner',{label:'이름'})+'님의 미니홈피 <span class="hrt">♥</span></h1><span class="url">'+ed('url',{label:'주소'})+'</span></div><span class="tools"><span class="status" id="status" role="status">'+esc(statusText)+'</span>'+editBtn+'</span></div></div>'+mbar()+
   (authorOn()?'<p class="hint">✎ 작가 편집 중이에요. 점선 글자를 눌러 고치고, 미니룸 테마·배경음악·다이어리·사진첩·방명록·일촌평을 채워 보세요. <b>저장하기</b>를 눌러야 독자들에게 보여요.</p>':ui.visit?'':ui.edit?'<p class="hint">미니룸 양옆 화살표로 테마를 구경하고, 마음에 들면 도토리로 사 보세요. 강아지와 고양이는 끌어서 옮길 수 있어요. 여기서 바꾼 건 저장되지 않아요.</p>':'')+
   '<div class="pages">'+sidebar()+'<div class="rings" aria-hidden="true">'+'<span></span>'.repeat(10)+'</div><main class="card">'+main+'</main></div>'+
   '</div><nav class="tabs" aria-label="메뉴">'+tabs+'</nav></div></div>'+modalHtml();
