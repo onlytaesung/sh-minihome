@@ -261,6 +261,7 @@ a{color:var(--blue)}
 .gbox{font-size:34px;animation:bob 1s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-4px)}}
 @media (prefers-reduced-motion:reduce){.gbox{animation:none}}
+.gtxt{line-height:1.7}
 .msub{margin:0;font-size:11px;color:var(--muted)}
 .wallet{font-size:12px;color:#4b5563;text-align:right}.wallet b{color:var(--pink)}
 .stabs{display:flex;border-bottom:1px solid var(--soft-line)}
@@ -511,7 +512,8 @@ function mbar(){
 }
 function modalHtml(){
   var m=ui.modal,body='',title='';
-  if(m==='gift'){title='선물 도착';body='<div class="mgift"><span class="gbox" aria-hidden="true">🎁</span><p><b>김운학</b>님이 도토리 <b>10개</b>를 선물했어요.</p><p class="msub">“형 일촌 기념이에요.”</p></div><div class="mfoot"><button type="button" class="btn on" data-modal="">고마워</button></div>'}
+  if(m==='gift'){title='선물 도착';body='<div class="mgift"><span class="gbox" aria-hidden="true">🎁</span><p><b>김운학</b>님이 도토리 <b>10개</b>를 선물했어요.</p><p class="msub">“형 일촌 기념이에요.”</p></div><div class="mfoot"><button type="button" class="btn on" data-modal="guide">고마워</button></div>'}
+  else if(m==='guide'){title='안내';body='<div class="mgift"><span class="gbox" aria-hidden="true">✎</span><p class="gtxt">박성호가 되어 보는 체험용 미니홈피예요.<br><b>꾸미기</b>로 미니룸을 바꾸고, 미니미를 눌러 보고, 파도타기로 일촌 홈피에도 놀러 가 보세요.</p><p class="msub">방명록과 일촌평은 내 브라우저에 남고,<br>나머지는 나가면 처음으로 돌아가요.</p></div><div class="mfoot"><button type="button" class="btn on" data-modal="">시작하기</button></div>'}
   else if(m==='lack'){title='알림';body='<div class="mgift"><span class="gbox" aria-hidden="true">🌰</span><p>도토리가 부족합니다.</p><p class="msub">지금 가진 도토리 '+me.dotori+'개</p></div><div class="mfoot"><button type="button" class="btn ghost" data-modal="shop">돌아가기</button><button type="button" class="btn on" data-charge="1">도토리 10개 충전</button></div>'}
   else if(m==='note'){title='쪽지함';body=(me.notes.length?me.notes.map(function(n){return '<article class="note"><div class="nh"><b>'+esc(n.from)+'</b><time>'+esc(n.date)+'</time></div><p>'+esc(n.text)+'</p></article>'}).join(''):'<p class="empty-note" style="text-align:center;padding:20px 0">받은 쪽지가 없어요.</p>')+'<div class="mfoot"><button type="button" class="btn on" data-modal="">닫기</button></div>';me.notes.forEach(function(n){n.read=true})}
   else if(m==='surf'){title='일촌 파도타기';var L=ui.visit?[['home',ME_NAME,'떵호']]:(me.ilchon?[['unhak','김운학','운하기']]:[]);
@@ -740,7 +742,7 @@ function render(){
   app.innerHTML=SPRITES+'<div class="wrap on-'+ui.tab+(ui.edit||authorOn()?' editing':'')+'"><div class="shell"><div class="book">'+
   '<div class="top"><div class="count"><span class="t">TODAY</span> '+(ui.visit?esc(state.today):ed('today',{label:'TODAY 숫자'}))+' <span class="bar">|</span> <span class="o">TOTAL</span> '+(ui.visit?esc(state.total):ed('total',{label:'TOTAL 숫자'}))+'</div>'+
   '<div class="titlebar"><h1>'+ed('owner',{label:'이름'})+'님의 미니홈피 <span class="hrt">♥</span></h1><span class="url">'+ed('url',{label:'주소'})+'</span><span class="tools"><span class="status" id="status" role="status">'+esc(statusText)+'</span>'+editBtn+'</span></div></div>'+mbar()+
-  (authorOn()?'<p class="hint">✎ 작가 편집 중이에요. 점선 글자를 눌러 고치고, 미니룸 테마·배경음악·다이어리·사진첩·방명록·일촌평을 채워 보세요. <b>저장하기</b>를 눌러야 독자들에게 보여요.</p>':ui.visit?'':ui.edit?'<p class="hint">미니룸 양옆 화살표로 테마를 구경하고, 마음에 들면 도토리로 사 보세요. 강아지와 고양이는 끌어서 옮길 수 있어요. 여기서 바꾼 건 저장되지 않아요.</p>':'<p class="hint">✎ 박성호가 되어 보는 체험용 미니홈피예요. <b>꾸미기</b>로 미니룸을 바꾸고, 미니미를 눌러 보고, 파도타기로 일촌 홈피에도 놀러 가 보세요. 저장은 안 돼서 나가면 처음으로 돌아가요.</p>')+
+  (authorOn()?'<p class="hint">✎ 작가 편집 중이에요. 점선 글자를 눌러 고치고, 미니룸 테마·배경음악·다이어리·사진첩·방명록·일촌평을 채워 보세요. <b>저장하기</b>를 눌러야 독자들에게 보여요.</p>':ui.visit?'':ui.edit?'<p class="hint">미니룸 양옆 화살표로 테마를 구경하고, 마음에 들면 도토리로 사 보세요. 강아지와 고양이는 끌어서 옮길 수 있어요. 여기서 바꾼 건 저장되지 않아요.</p>':'')+
   '<div class="pages">'+sidebar()+'<div class="rings" aria-hidden="true">'+'<span></span>'.repeat(10)+'</div><main class="card">'+main+'</main></div>'+
   '</div><nav class="tabs" aria-label="메뉴">'+tabs+'</nav></div></div>'+modalHtml();
   restoreForms();
@@ -756,11 +758,11 @@ function go(t){if(!validTab(t))t='home';if(t!=='home'&&ui.edit){ui.edit=false;if
 window.addEventListener('hashchange',function(){var h=(location.hash||'').slice(1);if(!ui.gate&&validTab(h)&&h!==ui.tab){ui.tab=h;render();try{window.scrollTo(0,0)}catch(e){}}});
 var noteT=null,petDragged=false;
 app.addEventListener('click',function(e){
-  if(e.target.dataset&&e.target.dataset.modalBack){ui.modal='';render();return}
+  if(e.target.dataset&&e.target.dataset.modalBack){ui.modal=ui.modal==='gift'?'guide':'';render();return}
   var t=e.target.closest('button');if(!t)return;
   if(t.dataset.tab){go(t.dataset.tab);return}
   if(t.id==='editBtn'){var a=document.activeElement;if(a&&a.blur)a.blur();ui.edit=!ui.edit;if(!ui.edit&&me.owned.indexOf(themeIdx())<0)state.theme=me.ownTheme;render();return}
-  if(t.dataset.modal!==undefined){ui.modal=t.dataset.modal;render();return}
+  if(t.dataset.modal!==undefined){ui.modal=(t.dataset.modal===''&&ui.modal==='gift')?'guide':t.dataset.modal;render();return}
   if(t.dataset.stab){ui.shopTab=t.dataset.stab;render();return}
   if(t.dataset.charge){me.dotori+=10;ui.modal='shop';render();toast('🌰 도토리 10개를 충전했어요');return}
   if(t.dataset.buyTheme!==undefined){var bi=+t.dataset.buyTheme;if(me.dotori<PRICE[bi]){ui.modal='lack';render();return}me.dotori-=PRICE[bi];me.owned.push(bi);state.theme=bi;me.ownTheme=bi;render();toast('「'+THEMES[bi][0]+'」 미니룸을 샀어요');return}
